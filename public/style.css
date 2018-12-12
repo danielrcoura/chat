@@ -1,0 +1,25 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+main {
+  font-family: Arial, Helvetica, sans-serif;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  height: 100vh;
+}
+
+.channels-container {
+  border-right: 1px solid #aaa;
+  background: #fafafa;
+}
+.channels-container header{
+  color: #219ad3;
+  font-size: 1.3rem;
+  padding: 1rem;
+  border-bottom: 1px solid #aaa;
+  display: flex;
+  justify-content: space-between;
+}

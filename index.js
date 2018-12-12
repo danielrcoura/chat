@@ -4,6 +4,8 @@ const tokenGenerator = require('./tokenGenerator');
 
 app.use(express.json());
 
+app.use(express.static('public'))
+
 app.post('/token', (req, res) => {
   const deviceId = req.body.deviceId
   const identity = req.body.identity;
