@@ -4,22 +4,38 @@
   box-sizing: border-box;
 }
 
-main {
-  font-family: Arial, Helvetica, sans-serif;
-  display: grid;
-  grid-template-columns: 1fr 2fr;
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 100vh;
+  background: #eee;
 }
 
-.channels-container {
-  border-right: 1px solid #aaa;
-  background: #fafafa;
-}
-.channels-container header{
-  color: #219ad3;
-  font-size: 1.3rem;
-  padding: 1rem;
-  border-bottom: 1px solid #aaa;
+#chat-container {
+  width: 40vw;
+  height: 75vh;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  box-shadow: 0 5px 5px #ccc;
+  background: #fff;
+}
+
+#chat-input {
+  height: 10%;
+  border-top: 1px solid #ccc;
+  display: flex;
+}
+
+#chat-input input {
+  border: none;
+  outline: none;
+  padding: .5rem 1rem;
+  width: 100%;
+  font-size: 1rem;
+  color: #555;
+}
+
+#messages {
+  height: 90%;
 }

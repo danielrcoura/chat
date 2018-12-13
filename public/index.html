@@ -1,23 +1,23 @@
-<html lang="pt-br">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Twilio Chat</title>
-  <link rel="stylesheet" href="./style.css">
+    <title>Twilio Chat Quickstart</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main>
-    <div class="channels-container">
-      <header>Channels <span>+</span></header>
-      <div id="channels-list"></div>
-    </div>
-    <div class="messages-container"></div>
-  </main>
+  <header>
+  </header>
 
-  <script src="http://media.twiliocdn.com/sdk/js/common/v0.1/twilio-common.min.js"></script>
-  <script src="http://media.twiliocdn.com/sdk/js/chat/v3.0/twilio-chat.min.js"></script>
+  <section id="chat-container">
+    <div id="messages"></div>
+    <div id="chat-input">
+      <input type="text" placeholder="Type a message" autofocus/>
+    </div>
+  </section>
+
+  <script src="https://media.twiliocdn.com/sdk/js/common/v0.1/twilio-common.min.js"></script>
+  <script src="https://media.twiliocdn.com/sdk/js/chat/v3.0/twilio-chat.min.js"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script src="./chat.js"></script>
+  <script src="index.js"></script>
 </body>
 </html>
