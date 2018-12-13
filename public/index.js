@@ -3,15 +3,45 @@
 
 let $message = document.getElementById('messages');
 
+function scrollDown () {
+  $message.scrollTop = $message.height;
+}
+
 function notify (msg) {
   let $element = document.createElement('div');
   $element.innerText = msg;
   $element.classList.add('notification')
   
-  $message.appendChild($element)
+  $message.appendChild($element);
+  scrollDown();
 }
 
+function printUserMessage (text) {
+  let $element = document.createElement('div');
+  $element.innerText = text;
+  $element.classList.add('user-message');
 
+  $message.appendChild($element);
+  scrollDown();
+}
+
+function printChannelMessage (text) {
+  let $element = document.createElement('div');
+  $element.innerText = text;
+  $element.classList.add('channel-message');
+
+  $message.appendChild($element);
+  scrollDown();
+}
+
+const $form = document.getElementById('form-input');
+const $input = document.querySelector('#form-input input');
+$form.addEventListener("submit", (event) => {
+  event.preventDefault();
+  printUserMessage($input.value);
+  $input.value = '';
+  generalChannel.sendMessage($input.value);
+});
 
 
 // MODEL
@@ -19,35 +49,35 @@ let chatClient;
 let username;
 let generalChannel;
 
-axios.post('/token', { deviceId: 'browser', identity: 'testinho3' })
+axios.post('/token', { deviceId: 'browser', identity: 'testinho7' })
   .then(res => {
     username = res.data.identity;
-    notify(`user assigned: ${username}`);
-
-    Twilio.Chat.Client.create(res.data.token).then(client => {
-      console.log('client: ', client);
-      chatClient = client;
-      chatClient.getSubscribedChannels().then(createOrJoinGeneralChannel);
-    });
+    return Twilio.Chat.Client.create(res.data.token)
   })
+  .then(client => {
+    notify(`Você é o usuário ${username}`);
+    chatClient = client;
+    chatClient.getSubscribedChannels().then(joinGeneralChannel);
+  })
+  .catch(handleErr);
 
-function createOrJoinGeneralChannel () {
+function joinGeneralChannel () {
   chatClient.getChannelByUniqueName('general')
   .then(channel => {
     generalChannel = channel;
-    console.log('general channel: ', generalChannel);
-    setupChannel();
+    joinChannel();
   })
+  .catch(handleErr)
 }
 
-function setupChannel() {
-  generalChannel.join().then(channel => {
-    console.log('Joined channel as: ', username);
-  });
+function joinChannel() {
+  generalChannel.join()
+    .then(channel => notify(`Joined in General channel as ${username}`))
+    .catch(handleErr);
 
   generalChannel.on('messageAdded', function(message) {
-    console.log(message.author, message.body);
+    printChannelMessage(`${message.author}, ${message.body}`);
   });
 }
 
-// generalChannel.sendMessage('message');
+function handleErr (err) { console.log(err) }
