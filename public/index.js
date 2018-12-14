@@ -5,8 +5,6 @@ let $message = document.getElementById('messages');
 const $form = document.getElementById('form-input');
 const $input = document.querySelector('#form-input input');
 
-notify('Conectando ao servidor...')
-
 function scrollDown () {
   $message.scrollTop = $message.getBoundingClientRect().height;
 }
@@ -22,11 +20,22 @@ function notify (msg) {
 
 function printMessage (from, message) {
   let $element = document.createElement('div');
-  $element.innerText = message;
-  
-  if (from === username) $element.classList.add('user-message');
-  else $element.classList.add('channel-message');
-  
+  let $text = document.createElement('div');
+  let $from = document.createElement('div');
+
+  $text.innerHTML = message;
+  $from.classList.add('from');
+
+  if (from === username) {
+    $element.classList.add('user-message');
+  } else {
+    $from.innerText = from;
+    $element.classList.add('channel-message');
+  }
+
+  $element.appendChild($from);
+  $element.appendChild($text);
+
   $message.appendChild($element);
   scrollDown();
 }
