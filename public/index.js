@@ -5,8 +5,10 @@ let $message = document.getElementById('messages');
 const $form = document.getElementById('form-input');
 const $input = document.querySelector('#form-input input');
 
+notify('Conectando ao servidor...')
+
 function scrollDown () {
-  $message.scrollTop = $message.height;
+  $message.scrollTop = $message.getBoundingClientRect().height;
 }
 
 function notify (msg) {

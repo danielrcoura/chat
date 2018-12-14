@@ -3,10 +3,10 @@ const twilio = require('twilio');
 const AccessToken = twilio.jwt.AccessToken;
 const ChatGrant = AccessToken.ChatGrant;
 
-function TokenGenerator(identity, deviceId) {
+function TokenGenerator(identity) {
   const appName = 'TwilioChat';
 
-  const endpointId = appName + ':' + identity + ':' + deviceId;
+  const endpointId = appName + ':' + identity;
   
   const chatGrant = new ChatGrant({
     serviceSid: process.env.TWILIO_CHAT_SERVICE_SID,

@@ -1,16 +1,15 @@
 const express = require('express');
 const app = express();
 const tokenGenerator = require('./tokenGenerator');
+const nameGenerator = require('./nameGenerator');
 
 app.use(express.json());
 
 app.use(express.static('public'))
 
 app.post('/token', (req, res) => {
-  const deviceId = req.body.deviceId
-  const identity = req.body.identity;
-
-  const token = tokenGenerator.generate(identity, deviceId)
+  const identity = nameGenerator();
+  const token = tokenGenerator.generate(identity);
 
   res.send({
     identity: identity,
