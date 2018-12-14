@@ -2,6 +2,8 @@
 // VIEW
 
 let $message = document.getElementById('messages');
+const $form = document.getElementById('form-input');
+const $input = document.querySelector('#form-input input');
 
 function scrollDown () {
   $message.scrollTop = $message.height;
@@ -16,31 +18,21 @@ function notify (msg) {
   scrollDown();
 }
 
-function printUserMessage (text) {
+function printMessage (from, message) {
   let $element = document.createElement('div');
-  $element.innerText = text;
-  $element.classList.add('user-message');
-
+  $element.innerText = message;
+  
+  if (from === username) $element.classList.add('user-message');
+  else $element.classList.add('channel-message');
+  
   $message.appendChild($element);
   scrollDown();
 }
 
-function printChannelMessage (text) {
-  let $element = document.createElement('div');
-  $element.innerText = text;
-  $element.classList.add('channel-message');
-
-  $message.appendChild($element);
-  scrollDown();
-}
-
-const $form = document.getElementById('form-input');
-const $input = document.querySelector('#form-input input');
 $form.addEventListener("submit", (event) => {
   event.preventDefault();
-  printUserMessage($input.value);
-  $input.value = '';
   generalChannel.sendMessage($input.value);
+  $input.value = '';
 });
 
 
@@ -73,11 +65,13 @@ function joinGeneralChannel () {
 function joinChannel() {
   generalChannel.join()
     .then(channel => notify(`Joined in General channel as ${username}`))
-    .catch(handleErr);
 
-  generalChannel.on('messageAdded', function(message) {
-    printChannelMessage(`${message.author}, ${message.body}`);
+  generalChannel.on('messageAdded', message => {
+    printMessage(message.author, message.body);
   });
+
+  $input.disabled = false;
+  $input.focus();
 }
 
 function handleErr (err) { console.log(err) }
